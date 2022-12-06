@@ -1,12 +1,9 @@
 import React from "react";
 import img from "../images.png";
 import Swal from "sweetalert2";
-import { ediUserRoleGroup} from "../services/auth";
-import {
-  useNavigate,
-} from 'react-router-dom';
+import { ediUserRoleGroup } from "../services/auth";
+import { useNavigate } from "react-router-dom";
 function GroupMemberDetail(props) {
-
   const navigate = useNavigate();
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -18,11 +15,16 @@ function GroupMemberDetail(props) {
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Assign",
-    }).then( async (result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         let idRole;
-        role ==="co-owner" ? idRole = 2 : idRole=3;
-        await ediUserRoleGroup(currentUser.data.token,props.idgroup,props.id,idRole).then((response) => {
+        role === "co-owner" ? (idRole = 2) : (idRole = 3);
+        await ediUserRoleGroup(
+          currentUser.data.token,
+          props.idgroup,
+          props.id,
+          idRole
+        ).then((response) => {
           if (response.status === 200) {
             Swal.fire({
               icon: "success",
@@ -30,17 +32,17 @@ function GroupMemberDetail(props) {
               showConfirmButton: false,
               timer: 1000,
             });
-            navigate("/groups/"+props.idgroup)
+            navigate("/groups/" + props.idgroup);
           } else {
             Swal.fire({
               icon: "error",
               title: response.message,
             });
           }
-        })
+        });
       }
     });
-  }
+  };
   return (
     <div className="container bg-white py-3">
       <div className="text-center">

@@ -25,8 +25,8 @@
   font-weight: 400;
   font-family: "Fira Sans", sans-serif;
 }
-.form-create .container{
-  margin-top:40px;
+.form-create .container {
+  margin-top: 40px;
 }
 h1,
 h2,
@@ -39,9 +39,9 @@ span {
   font-weight: 500;
   font-family: "Fira Sans", sans-serif;
 }
-.error{
-  color:red;
+.error {
+  color: red;
 }
-.form-create{
+.form-create {
   min-height: 100vh !important;
 }

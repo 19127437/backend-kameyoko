@@ -1,7 +1,7 @@
-.collapse{
-    display: flex;
-    justify-content: end;
+.collapse {
+  display: flex;
+  justify-content: end;
 }
-.container-fluid{
-    background-color: black;
+.container-fluid {
+  background-color: black;
 }
