@@ -1,86 +1,89 @@
+import React, {useState} from "react";
 import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import React, { useEffect, useState } from "react";
+import Slide from "./Slide";
+import CreateMultipleQuestion from "./CreateMultipleQuestion";
+import CreateParagraphQuestion from "./CreateParagraphQuestion";
+import Paragraph from "./Paragraph";
+import Heading from "./Heading";
+import CreateHeadingQuestion from "./CreateHeadingQuestion";
 
-function CreateQuestion() {
-  const [numberOption, setNumberOption] = useState(3);
+let createSlide = {
+    "type": 1, "content": {
+        "title": "",
+        "meta": "your meta",
+        "options": []
+    }
+}
 
-  function renderOption() {
-    for (var i = 0; i < numberOption; i++) {}
-  }
-
-  return (
-    <div
-      className="bg-white p-3"
-      style={{ borderRadius: "10px", minHeight: "100vh" }}
-    >
-      <div class="list-group">
-        <h6 className="fw-bold mb-3">Slide type</h6>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">
-            Popular question type
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Popular question type"
-          >
-            <MenuItem value={1}>Multiple choice</MenuItem>
-          </Select>
-        </FormControl>
-      </div>
-      <div className="my-3">
-        <h6 className="fw-bold">Question</h6>
-        <TextField
-          label="Your question"
-          variant="outlined"
-          className="form-control"
-          size="medium"
-        />
-      </div>
-      <div className="my-3">
-        <h6 className="fw-bold">Options</h6>
-        {new Array(numberOption).fill(0).map((_, index) => (
-          <div key={index} className="d-flex mb-2">
-            <TextField
-              label={"Option " + index}
-              variant="outlined"
-              className="form-control"
-              size="small"
-            />
-            <button
-              style={{ border: "none", backgroundColor: "white" }}
-              type="button"
-              onClick={() => {
-                setNumberOption(numberOption - 1);
-              }}
-            >
-              <DeleteIcon className=""></DeleteIcon>
-            </button>
-          </div>
-        ))}
-      </div>
-      <div class="d-grid gap-2">
-        <button
-          class="btn btn-secondary"
-          type="button"
-          onClick={() => {
-            setNumberOption(numberOption + 1);
-          }}
-        >
-          <AddIcon></AddIcon>
-          Add option
-        </button>
-      </div>
-    </div>
-  );
+function CreateQuestion(props) {
+    const [typeSlide,setTypeSlide] = useState(1)
+    const callFunctionRender = () => {
+        props.parentRender(true);
+    };
+    const _handleChange = (event) => {
+        setTypeSlide(event.target.value)
+    }
+    return (
+        <>
+            <div className="col-7">
+                {
+                    typeSlide === 1 ?
+                        <Slide data={createSlide} id={props.id} check={true}/>
+                        :
+                        typeSlide === 9 ?
+                            <Paragraph paragraph={"hey hey hey"}/>
+                            :
+                            <h2>
+                                <Heading heading={"hey hey hey"}/>
+                            </h2>
+                }
+            </div>
+            <div className="col-3">
+                <div
+                    className="bg-white p-3"
+                    style={{borderRadius: "10px", minHeight: "75vh"}}
+                >
+                    <div className="list-group">
+                        <h6 className="fw-bold mb-3">Slide type</h6>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">
+                                Popular question type
+                            </InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                label="Popular question type"
+                                value={typeSlide ? typeSlide : ""}
+                                onChange={e => {
+                                    _handleChange(e)
+                                }}
+                            >
+                                <MenuItem value={1}>Multiple choice</MenuItem>
+                                <MenuItem value={9}>Paragraph</MenuItem>
+                                <MenuItem value={8}>Heading</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+                    {
+                        typeSlide === 1 ?
+                            <CreateMultipleQuestion idSlide={props.idSlide} parentRender={callFunctionRender}/>
+                            :
+                            typeSlide === 9 ?
+                                <CreateParagraphQuestion idSlide={props.idSlide} parentRender={callFunctionRender}/>
+                                :
+                                <h2>
+                                   <CreateHeadingQuestion idSlide={props.idSlide} parentRender={callFunctionRender}/>
+                                </h2>
+                    }
+                </div>
+            </div>
+        </>
+    );
 }
 
 export default CreateQuestion;
